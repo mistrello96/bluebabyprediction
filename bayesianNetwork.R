@@ -66,7 +66,12 @@ for(i in 1:10){
   paper_f1measure = append(f1measure, paper_f1measure)
   }
 
-# debug print
+# plots
+graphviz.chart(paper_fit, grid = TRUE, main = "Rappresentazione della rete fittata")
+graphviz.plot(paper_model, main = "Representation of the paper network structure")
+graphviz.plot(induced_model, main = "Representation of the inducded network structure")
+
+# debug prints
 paper_prediction
 testset$Disease
 confusion.matrix
