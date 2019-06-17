@@ -1,4 +1,4 @@
-# Here the code is run once at the launchof the app, so put HERE all 
+# Here the code is run once at the launch of the app, so put HERE all 
 # the instruction to import libries, datas, whatever must be run 
 # once in order to not affect performances
 library(shiny)
@@ -11,15 +11,43 @@ ui <- fluidPage(
     # position = right to put the sidebar on the right
     
     sidebarPanel( # side bar content
-      "sidebar panel",
-      fluidRow(
-        column(12, 
-               selectInput("select", h3("Select box"), 
-                           choices = list("Choice 1" = 1, "Choice 2" = 2,
-                                          "Choice 3" = 3), selected = 1)
-        )
-      )
-    ),
+      h2("Select the evidences you have:"),
+      selectInput("BirthAsphyxia-value", h4("Birth asphyxia"), 
+                  choices = list("no" = "no", "yes" = "yes"), selected = 1),
+      selectInput("HypDistrib-value", h4("BirthAsphyxia"), 
+                  choices = list("Equal" = "Equal", "Unequal" = "Unequal"), selected = 1),
+      selectInput("HypoxiaInO2-value", h4("BirthAsphyxia"), 
+                  choices = list("Mild" = "Mild", "Moderate" = "Moderate",
+                                 "Severe" = "Severe"), selected = 1),
+      selectInput("CO2-value", h4("BirthAsphyxia"), 
+                  choices = list("High" = "High", "Low" = "Low",
+                                 "Normal" = "Normal"), selected = 1),
+      selectInput("ChestXray-value", h4("BirthAsphyxia"), 
+                  choices = list("Asy/Patch" = "Asy/Patch", "Grd Glass" = "Grd_Glass",
+                                 "Normal" = "Normal", "Oligaemic" = "Oligaemic",
+                                 "Plethoric" = "Plethoric"), selected = 1),
+      selectInput("Grunting-value", h4("BirthAsphyxia"), 
+                  choices = list("no" = "no", "yes" = "yes"), selected = 1),
+      selectInput("LVHreport-value", h4("BirthAsphyxia"), 
+                  choices = list("no" = "no", "yes" = "yes"), selected = 1),
+      selectInput("LowerBodyO2-value", h4("BirthAsphyxia"), 
+                  choices = list("<5" = "<5", "12+" = "12+", 
+                                 "5-12" = "5-12"), selected = 1),
+      selectInput("RUQO2-value", h4("BirthAsphyxia"), 
+                  choices = list("<5" = "<5", "12+" = "12+", 
+                                 "5-12" = "5-12"), selected = 1),
+      selectInput("CO2Report-value", h4("BirthAsphyxia"), 
+                  choices = list("<7.5" = "<7.5", ">=7.5" = ">=7.5"), selected = 1),
+      selectInput("XrayReport-value", h4("BirthAsphyxia"), 
+                  choices = list("Asy/Patch" = "Asy/Patch", "Grd Glass" = "Grd_Glass",
+                                 "Normal" = "Normal", "Oligaemic" = "Oligaemic",
+                                 "Plethoric" = "Plethoric"), selected = 1),
+      selectInput("GruntingReport-value", h4("BirthAsphyxia"), 
+                  choices = list("no" = "no", "yes" = "yes"), selected = 1),
+      selectInput("Age-value", h4("BirthAsphyxia"), 
+                  choices = list("0-3 days" = "0-3_days", "11-30 days" = "11-30_days",
+                                 "" = "Normal"), selected = 1),
+      ),
       
     mainPanel(  # main panel content
       h1("First level title"), # , align = "center" to center the text
