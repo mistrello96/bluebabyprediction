@@ -159,3 +159,20 @@ png("images/png/induced_structure.png", width = 800, height = 900)
 par(mar = c(0,0,0,0) + 0.1)
 graphviz.chart(induced_fit, grid = TRUE, main = "Rappresentazione della rete fittata")
 dev.off()
+
+# estimating Disease probability given evidence
+# creating structure node=evidence
+ev = list(LVHreport = "yes")
+max_value = 0
+max_name = ""
+new_cpt = list()
+for (i in levels(dataset$Disease)){
+  res = cpquery(paper_fit, event=Disease==i, method="lw", evidence = ev)
+  new_cpt[[i]] = res
+  if (res > max_value){
+    max_value = res
+    max_name = i
+  }
+}
+sprintf("The most probable disease given the evidence is %s with a probability of %f", max_name, max_value)
+
