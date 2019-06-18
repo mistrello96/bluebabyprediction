@@ -22,105 +22,131 @@ paper_model = model2network("[BirthAsphyxia][Disease|BirthAsphyxia][LVHreport|LV
 # print model info
 paper_model
 
-# creating 10 fold cross validation array
-model_diff = c()
+paper_accuracy_repeated= c()
+paper_precision_repeated = c()
+paper_recall_repeated = c()
+paper_f1measure_repeated = c()
 
-paper_accuracy = c()
-paper_precision = c()
-papar_recall = c()
-paper_f1measure = c()
+induced_accuracy_repeated = c()
+induced_precision_repeated = c()
+induced_recall_repeated = c()
+induced_f1measure_repeated = c()
 
-induced_accuracy = c()
-induced_precision = c()
-induced_recall = c()
-induced_f1measure = c()
-
-# performing 10-fold cv
-for(i in 1:10){
-  trainset = dataset[ind != i, ]
-  testset = dataset[ind == i, ]
-  testset_cropped = testset
-  testset_cropped$Disease <- NULL
+for (j in 1:10){  
+  # creating 10 fold cross validation array
+  model_diff = c()
   
-  # learn the structure from data
-  induced_model = tabu(trainset, score = "k2")
-  induced_model
+  paper_accuracy = c()
+  paper_precision = c()
+  paper_recall = c()
+  paper_f1measure = c()
   
-  #compare models
-    #the true positive (tp) arcs, which appear both in induced_model and in paper_model
-    #the false positive (fp) arcs, which appear in paper_model but not in induced_model
-    #the false negative (fn) arcs, which appear in induced_model but not in paper_model
-  all.equal(induced_model, paper_model)
-  model_diff = append(compare(induced_model, paper_model), model_diff)
+  induced_accuracy = c()
+  induced_precision = c()
+  induced_recall = c()
+  induced_f1measure = c()
   
-  # fitting the paper model
-  paper_fit = bn.fit(paper_model, trainset, method = "mle")
-  # fitting the induced model
-  induced_fit = bn.fit(induced_model, trainset, method = "mle")
-  
-  # prediction
-  paper_prediction = predict(paper_fit, "Disease", testset_cropped, method = "bayes-lw")
-  induced_prediction = predict(induced_fit, "Disease", testset_cropped, method = "bayes-lw")
-  
-  # performance evaluation paper
-  confusion.matrix = table(testset$Disease, paper_prediction)
-  accuracy = sum(diag(confusion.matrix))/sum(confusion.matrix)
-  paper_accuracy = append(accuracy, paper_accuracy)
-  precision = 0
-  recall = 0
-  for (i in 1:6){
-    precision = precision + (confusion.matrix[i,i] / sum(confusion.matrix[,i]))
-    recall = recall + (confusion.matrix[i,i] / sum(confusion.matrix[i,]))
+  # performing 10-fold cv
+  for(i in 1:10){
+    trainset = dataset[ind != i, ]
+    testset = dataset[ind == i, ]
+    testset_cropped = testset
+    testset_cropped$Disease <- NULL
     
-  }
-  precision = precision / 6
-  recall = recall / 6
-  paper_precision = append(precision, paper_precision)
-  papar_recall = append(recall, papar_recall)
-  f1measure = 2 * (precision * recall / (precision + recall))
-  paper_f1measure = append(f1measure, paper_f1measure)
-  
-  # performance evaluation induced
-  confusion.matrix = table(testset$Disease, induced_prediction)
-  accuracy = sum(diag(confusion.matrix))/sum(confusion.matrix)
-  induced_accuracy = append(accuracy, induced_accuracy)
-  precision = 0
-  recall = 0
-  for (i in 1:6){
-    precision = precision + (confusion.matrix[i,i] / sum(confusion.matrix[,i]))
-    recall = recall + (confusion.matrix[i,i] / sum(confusion.matrix[i,]))
+    # learn the structure from data
+    induced_model = tabu(trainset, score = "k2")
+    induced_model
     
+    #compare models
+      #the true positive (tp) arcs, which appear both in induced_model and in paper_model
+      #the false positive (fp) arcs, which appear in paper_model but not in induced_model
+      #the false negative (fn) arcs, which appear in induced_model but not in paper_model
+    all.equal(induced_model, paper_model)
+    model_diff = append(compare(induced_model, paper_model), model_diff)
+    
+    # fitting the paper model
+    paper_fit = bn.fit(paper_model, trainset, method = "mle")
+    # fitting the induced model
+    induced_fit = bn.fit(induced_model, trainset, method = "mle")
+    
+    # prediction
+    paper_prediction = predict(paper_fit, "Disease", testset_cropped, method = "bayes-lw")
+    induced_prediction = predict(induced_fit, "Disease", testset_cropped, method = "bayes-lw")
+    
+    # performance evaluation paper
+    confusion.matrix = table(testset$Disease, paper_prediction)
+    accuracy = sum(diag(confusion.matrix))/sum(confusion.matrix)
+    paper_accuracy = append(accuracy, paper_accuracy)
+    precision = 0
+    recall = 0
+    for (i in 1:6){
+      precision = precision + (confusion.matrix[i,i] / sum(confusion.matrix[,i]))
+      recall = recall + (confusion.matrix[i,i] / sum(confusion.matrix[i,]))
+      
+    }
+    precision = precision / 6
+    recall = recall / 6
+    paper_precision = append(precision, paper_precision)
+    paper_recall = append(recall, paper_recall)
+    f1measure = 2 * (precision * recall / (precision + recall))
+    paper_f1measure = append(f1measure, paper_f1measure)
+    
+    # performance evaluation induced
+    confusion.matrix = table(testset$Disease, induced_prediction)
+    accuracy = sum(diag(confusion.matrix))/sum(confusion.matrix)
+    induced_accuracy = append(accuracy, induced_accuracy)
+    precision = 0
+    recall = 0
+    for (i in 1:6){
+      precision = precision + (confusion.matrix[i,i] / sum(confusion.matrix[,i]))
+      recall = recall + (confusion.matrix[i,i] / sum(confusion.matrix[i,]))
+      
+    }
+    precision = precision / 6
+    recall = recall / 6
+    induced_precision = append(precision, induced_precision)
+    induced_recall = append(recall, induced_recall)
+    f1measure = 2 * (precision * recall / (precision + recall))
+    induced_f1measure = append(f1measure, induced_f1measure)
   }
-  precision = precision / 6
-  recall = recall / 6
-  induced_precision = append(precision, induced_precision)
-  induced_recall = append(recall, induced_recall)
-  f1measure = 2 * (precision * recall / (precision + recall))
-  induced_f1measure = append(f1measure, induced_f1measure)
+  paper_accuracy_repeated =append(mean(paper_accuracy), paper_accuracy_repeated)
+  paper_precision_repeated =append(mean(paper_precision), paper_precision_repeated)
+  paper_recall_repeated =append(mean(paper_recall), paper_recall_repeated)
+  paper_f1measure_repeated =append(mean(paper_f1measure), paper_f1measure_repeated)
+  
+  induced_accuracy_repeated =append(mean(induced_accuracy), induced_accuracy_repeated)
+  induced_precision_repeated =append(mean(induced_precision), induced_precision_repeated)
+  induced_recall_repeated =append(mean(induced_recall), induced_recall_repeated)
+  induced_f1measure_repeated =append(mean(induced_f1measure), induced_f1measure_repeated)
 }
-
 # Performance plot
 pdf("paper_performance.pdf", width = 8, height = 8)
 # boxplot delle misure di performance
 par(mfrow=c(2,2))
-boxplot(paper_accuracy, main = "Accuracy")
-boxplot(paper_precision, main = "Precision")
-boxplot(papar_recall, main = "Recall")
-boxplot(paper_f1measure, main = "F1Measure")
+boxplot(paper_accuracy_repeated, main = "Accuracy")
+boxplot(paper_precision_repeated, main = "Precision")
+boxplot(paper_recall_repeated, main = "Recall")
+boxplot(paper_f1measure_repeated, main = "F1Measure")
 dev.off()
 print("Evaluating paper performance:")
-evaluatePerformance(paper_accuracy, paper_precision, papar_recall, paper_f1measure)
+evaluatePerformance(paper_accuracy_repeated, paper_precision_repeated, paper_recall_repeated, paper_f1measure_repeated)
 
 pdf("induced_performance.pdf", width = 8, height = 8)
 # boxplot delle misure di performance
 par(mfrow=c(2,2))
-boxplot(induced_accuracy, main = "Accuracy")
-boxplot(induced_precision, main = "Precision")
-boxplot(induced_recall, main = "Recall")
-boxplot(induced_f1measure, main = "F1Measure")
+boxplot(induced_accuracy_repeated, main = "Accuracy")
+boxplot(induced_precision_repeated, main = "Precision")
+boxplot(induced_recall_repeated, main = "Recall")
+boxplot(induced_f1measure_repeated, main = "F1Measure")
 dev.off()
 print("Evaluating induced performance:")
-evaluatePerformance(induced_accuracy, induced_precision, induced_recall, induced_f1measure)
+evaluatePerformance(induced_accuracy_repeated, induced_precision_repeated, induced_recall_repeated, induced_f1measure_repeated)
+
+# t-test
+t.test(paper_accuracy_repeated, induced_accuracy_repeated, paired = TRUE, conf.level = 0.95)
+t.test(paper_precision_repeated, induced_precision_repeated, paired = TRUE, conf.level = 0.95)
+t.test(paper_recall_repeated, induced_recall_repeated, paired = TRUE, conf.level = 0.95)
+t.test(paper_f1measure_repeated, induced_f1measure_repeated, paired = TRUE, conf.level = 0.95)
 
 # plots of network
 # induced network
@@ -159,3 +185,24 @@ png("images/png/induced_structure.png", width = 800, height = 900)
 par(mar = c(0,0,0,0) + 0.1)
 graphviz.chart(induced_fit, grid = TRUE, main = "Rappresentazione della rete fittata")
 dev.off()
+
+# estimating Disease probability given evidence
+# training the network with the full dataset
+# we use the learne dstructure
+induced_full_trained = bn.fit(induced_model, trainset, method = "mle")
+
+# creating structure node=evidence
+ev = list(LVHreport = "yes")
+max_value = 0
+max_name = ""
+new_cpt = list()
+for (i in levels(dataset$Disease)){
+  res = cpquery(induced_full_trained, event=Disease==i, method="lw", evidence = ev)
+  new_cpt[[i]] = res
+  if (res > max_value){
+    max_value = res
+    max_name = i
+  }
+}
+sprintf("The most probable disease given the evidence is %s with a probability of %f", max_name, max_value)
+
