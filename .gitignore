@@ -35,5 +35,6 @@ vignettes/*.pdf
 *.utf8.md
 *.knit.md
 
-*.pdf
-*.png
+# plotted images
+images/pdf/*.pdf
+images/png/*.png
