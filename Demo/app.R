@@ -157,8 +157,8 @@ ui <- fluidPage(
     ),
       
     mainPanel(  # main panel content
-      textOutput("selected_var"),
-      img(src = "paper_structure.png", height = 900, width = 800)
+      img(src = "paper_structure.png", height = 830, width = 800),
+      textOutput("probabilities")
             
       # look lesson 2 for formatted text and how insert images
 
@@ -173,8 +173,43 @@ server <- function(input, output) {
   # output$<id_widget_name> <- <render_funciont>({<a complicated function>})
   # input$<id_widget_name> to access the value of the widget
   
-  output$selected_var <- renderText({ 
-    getwd()
+  output$probabilities <- renderText({ 
+    # creating structure node=evidence
+    ev = list(LVHreport = "yes")
+    # variable to store the most likelly disease
+    new_cpt = list()
+    #for (i in levels(dataset$Disease)){
+    #  res = cpquery(paper_full_trained, event=Disease==i, method="lw", evidence = ev)
+    #  new_cpt[[pos]] = paste0(i, ": ", res)
+    #  pos <- pos + 1
+    #}
+    
+    s <- 0
+    res = cpquery(paper_full_trained, event=Disease=="Fallot", method="lw", evidence = ev)
+    new_cpt[[1]] = paste0("Fallot", ": ", res)
+    s <- s + res
+    res = cpquery(paper_full_trained, event=Disease=="Lung", method="lw", evidence = ev)
+    new_cpt[[2]] = paste0("Lung", ": ", res)
+    s <- s + res
+    res = cpquery(paper_full_trained, event=Disease=="PAIVS", method="lw", evidence = ev)
+    new_cpt[[3]] = paste0("PAIVS", ": ", res)
+    s <- s + res
+    res = cpquery(paper_full_trained, event=Disease=="PFC", method="lw", evidence = ev)
+    new_cpt[[4]] = paste0("PFC", ": ", res)
+    s <- s + res
+    res = cpquery(paper_full_trained, event=Disease=="TAPVD", method="lw", evidence = ev)
+    new_cpt[[5]] = paste0("TAPVD", ": ", res)
+    s <- s + res
+    res = cpquery(paper_full_trained, event=Disease=="TGA", method="lw", evidence = ev)
+    new_cpt[[6]] = paste0("TGA", ": ", res)
+    s <- s + res
+    
+    #for (i in 1 : 6){
+    #  new_cpt[i] = new_cpt[i] / s
+    #}
+    
+    print(new_cpt)
+    sprintf("%s, %s, %s, %s, %s, %s", new_cpt[1], new_cpt[2], new_cpt[3], new_cpt[4], new_cpt[5], new_cpt[6])
   })
 }
 
