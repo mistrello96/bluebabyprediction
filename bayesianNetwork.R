@@ -160,8 +160,6 @@ for (j in 1:10){
   reversed_f1measure_repeated =append(mean(reversed_f1measure), reversed_f1measure_repeated)
 }
 
-reversed_prediction = predict(reversed_fit, "Disease", testset_cropped, method = "bayes-lw")
-
 # Performance plot
 pdf("paper_performance.pdf", width = 8, height = 8)
 # boxplot delle misure di performance
@@ -201,9 +199,19 @@ t.test(paper_accuracy_repeated, induced_accuracy_repeated, paired = TRUE, conf.l
 t.test(paper_precision_repeated, induced_precision_repeated, paired = TRUE, conf.level = 0.95)
 t.test(paper_recall_repeated, induced_recall_repeated, paired = TRUE, conf.level = 0.95)
 t.test(paper_f1measure_repeated, induced_f1measure_repeated, paired = TRUE, conf.level = 0.95)
-# the results shows that the two models are not statistically different
+# the results shows that the two models ARE NOT statistically different
+
+# t-test
+t.test(paper_accuracy_repeated, reversed_accuracy_repeated, paired = TRUE, conf.level = 0.95)
+t.test(paper_precision_repeated, reversed_precision_repeated, paired = TRUE, conf.level = 0.95)
+t.test(paper_recall_repeated, reversed_recall_repeated, paired = TRUE, conf.level = 0.95)
+t.test(paper_f1measure_repeated, reversed_f1measure_repeated, paired = TRUE, conf.level = 0.95)
+# the results shows that the two models ARE statistically different
 
 # plots of network
+paper_fit = bn.fit(paper_model, dataset, method = "mle")
+induced_fit = bn.fit(induced_model, dataset, method = "mle")
+reversed_fit = bn.fit(reversed_model, dataset, method = "mle")
 # induced network
 pdf("images/pdf/induced_fitted.pdf", width = 10, height = 10, onefile = FALSE)
 par(mar = c(0,0,0,0) + 0.1)
@@ -223,13 +231,22 @@ par(mar = c(0,0,0,0) + 0.1)
 graphviz.chart(paper_fit, grid = TRUE, main = "Rappresentazione della rete fittata")
 dev.off()
 
+pdf("images/pdf/reverse_fitted.pdf", width = 10, height = 10, onefile = FALSE)
+par(mar = c(0,0,0,0) + 0.1)
+graphviz.chart(reversed_fit, grid = TRUE, main = "Rappresentazione della rete fittata")
+dev.off()
+png("images/png/reversed_fitted.png", width = 800, height = 900)
+par(mar = c(0,0,0,0) + 0.1)
+graphviz.chart(reversed_fit, grid = TRUE, main = "Rappresentazione della rete fittata")
+dev.off()
+
 pdf("images/pdf/paper_structure.pdf", width = 10, height = 10, onefile = FALSE)
 par(mar = c(0,0,0,0) + 0.1)
 graphviz.plot(paper_model, main = "Representation of the paper network structure")
 dev.off()
 png("images/png/paper_structure.png", width = 800, height = 900)
 par(mar = c(0,0,0,0) + 0.1)
-graphviz.chart(paper_model, grid = TRUE, main = "Rappresentazione della rete fittata")
+graphviz.plot(paper_model, main = "Rappresentazione della rete fittata")
 dev.off()
 
 pdf("images/pdf/induced_structure.pdf", width = 10, height = 10, onefile = FALSE)
@@ -238,9 +255,19 @@ graphviz.plot(induced_model, main = "Representation of the inducded network stru
 dev.off()
 png("images/png/induced_structure.png", width = 800, height = 900)
 par(mar = c(0,0,0,0) + 0.1)
-graphviz.chart(induced_model, grid = TRUE, main = "Rappresentazione della rete fittata")
+graphviz.plot(induced_model, main = "Rappresentazione della rete fittata")
 dev.off()
 
+pdf("images/pdf/reversed_structure.pdf", width = 10, height = 10, onefile = FALSE)
+par(mar = c(0,0,0,0) + 0.1)
+graphviz.plot(reversed_model, main = "Representation of the inducded network structure")
+dev.off()
+png("images/png/reversed_structure.png", width = 800, height = 900)
+par(mar = c(0,0,0,0) + 0.1)
+graphviz.plot(reversed_model, main = "Rappresentazione della rete fittata")
+dev.off()
+
+### INFERENCE
 # estimating Disease probability given evidence
 # training the network with the full dataset
 # we use the learne dstructure
@@ -262,8 +289,23 @@ for (i in levels(dataset$Disease)){
 }
 sprintf("The most probable disease given the evidence is %s with a probability of %f", max_name, max_value)
 
+### D-SEPARATION
 # Testing d-separation betweens variables
+# Since the strucutre of the BN, we can make some exams indipendent to Disease given the observation of a symptom
 source = "Disease"
 destination = "CO2"
-given = c("Grunting")
+given = c("LungParench")
 dsep(paper_model, source, destination, given)
+
+source = "Disease"
+destination = "XrayReport"
+given = c("LungParench", "LungFlow")
+dsep(paper_model, source, destination, given)
+
+# but in a real situation, we cannot determin if a symptom is present if we dont' perform the exams.
+# the only think we can observ are the exams results
+source = "Disease"
+destination = "CO2"
+given = c("LowerBodyO2", "RUQO2", "GruntingReport", "Age", "CO2Report", "XrayReport", "LVHreport", "BirthAsphyxia")
+dsep(paper_model, source, destination, given)
+# in this way, no d-separation is possible
