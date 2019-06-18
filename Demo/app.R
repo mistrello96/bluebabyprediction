@@ -24,34 +24,34 @@ ui <- fluidPage(
       h2("Select the evidences you have:"),
       
       div(style="display: inline-block;vertical-align:top; width: 150px;", 
-          selectInput("BirthAsphyxia-value", h4("Birth asphyxia"), 
+          selectInput("BirthAsphyxia", h4("Birth asphyxia"), 
                       choices = list("No" = "no", "Yes" = "yes", 
                                      "No evidence" = "no_evidence"), 
                       selected = "no_evidence")),
       div(style="display: inline-block;vertical-align:top; width: 50px;",HTML("<br>")),
       
       div(style="display: inline-block;vertical-align:top; width: 150px;", 
-          selectInput("HypDistrib-value", h4("Hypoxia distribution"), 
+          selectInput("HypDistrib", h4("Hypoxia distribution"), 
                       choices = list("Equal" = "Equal", "Unequal" = "Unequal", 
                                      "No evidence" = "no_evidence"), 
                       selected = "no_evidence")),
       div(style="display: inline-block;vertical-align:top; width: 50px;",HTML("<br>")),
       
       div(style="display: inline-block;vertical-align:top; width: 150px;", 
-          selectInput("HypoxiaInO2-value", h4("Hypoxia in O2"), 
+          selectInput("HypoxiaInO2", h4("Hypoxia in O2"), 
                       choices = list("Mild" = "Mild", "Moderate" = "Moderate",
                                      "Severe" = "Severe", "No evidence" = "no_evidence"), 
                       selected = "no_evidence")),
       
       div(style="display: inline-block;vertical-align:top; width: 150px;", 
-          selectInput("CO2-value", h4("CO2"), 
+          selectInput("CO2", h4("CO2"), 
                       choices = list("High" = "High", "Low" = "Low",
                                      "Normal" = "Normal", "No evidence" = "no_evidence"), 
                       selected = "no_evidence")),
       div(style="display: inline-block;vertical-align:top; width: 50px;",HTML("<br>")),
       
       div(style="display: inline-block;vertical-align:top; width: 150px;", 
-          selectInput("ChestXray-value", h4("Chest X-ray"), 
+          selectInput("ChestXray", h4("Chest X-ray"), 
                       choices = list("Asy/Patch" = "Asy/Patch", "Grd Glass" = "Grd_Glass",
                                      "Normal" = "Normal", "Oligaemic" = "Oligaemic",
                                      "Plethoric" = "Plethoric", "No evidence" = "no_evidence"), 
@@ -59,40 +59,40 @@ ui <- fluidPage(
       div(style="display: inline-block;vertical-align:top; width: 50px;",HTML("<br>")),
       
       div(style="display: inline-block;vertical-align:top; width: 150px;", 
-          selectInput("Grunting-value", h4("Grunting"), 
+          selectInput("Grunting", h4("Grunting"), 
                       choices = list("No" = "no", "Yes" = "yes",
                                      "No evidence" = "no_evidence"), 
                       selected = "no_evidence")),
       
       div(style="display: inline-block;vertical-align:top; width: 150px;", 
-          selectInput("LVHreport-value", h4("LVH report"), 
+          selectInput("LVHreport", h4("LVH report"), 
                       choices = list("No" = "no", "Yes" = "yes",
                                      "No evidence" = "no_evidence"), 
                       selected = "no_evidence")),
       div(style="display: inline-block;vertical-align:top; width: 50px;",HTML("<br>")),
       
       div(style="display: inline-block;vertical-align:top; width: 150px;", 
-          selectInput("LowerBodyO2-value", h4("Lower body O2"), 
+          selectInput("LowerBodyO2", h4("Lower body O2"), 
                       choices = list("<5" = "<5", "12+" = "12+", 
                                      "5-12" = "5-12", "No evidence" = "no_evidence"), 
                       selected = "no_evidence")),
       div(style="display: inline-block;vertical-align:top; width: 50px;",HTML("<br>")),
       
       div(style="display: inline-block;vertical-align:top; width: 150px;", 
-          selectInput("RUQO2-value", h4("Right up quad O2"), 
+          selectInput("RUQO2", h4("Right up quad O2"), 
                       choices = list("<5" = "<5", "12+" = "12+", 
                                      "5-12" = "5-12", "No evidence" = "no_evidence"), 
                       selected = "no_evidence")),
       
       div(style="display: inline-block;vertical-align:top; width: 150px;", 
-          selectInput("CO2Report-value", h4("CO2 report"), 
+          selectInput("CO2Report", h4("CO2 report"), 
                       choices = list("<7.5" = "<7.5", ">=7.5" = ">=7.5",
                                      "No evidence" = "no_evidence"), 
                       selected = "no_evidence")),
       div(style="display: inline-block;vertical-align:top; width: 50px;",HTML("<br>")),
       
       div(style="display: inline-block;vertical-align:top; width: 150px;", 
-          selectInput("XrayReport-value", h4("X-ray report"), 
+          selectInput("XrayReport", h4("X-ray report"), 
                       choices = list("Asy/Patch" = "Asy/Patch", "Grd Glass" = "Grd_Glass",
                                      "Normal" = "Normal", "Oligaemic" = "Oligaemic",
                                      "Plethoric" = "Plethoric", "No evidence" = "no_evidence"), 
@@ -100,33 +100,33 @@ ui <- fluidPage(
       div(style="display: inline-block;vertical-align:top; width: 50px;",HTML("<br>")),
       
       div(style="display: inline-block;vertical-align:top; width: 150px;", 
-          selectInput("GruntingReport-value", h4("Grunting report"), 
+          selectInput("GruntingReport", h4("Grunting report"), 
                       choices = list("No" = "no", "Yes" = "yes",
                                      "No evidence" = "no_evidence"), 
                       selected = "no_evidence")),
      
        div(style="display: inline-block;vertical-align:top; width: 150px;", 
-           selectInput("Age-value", h4("Age at presentation"), 
+           selectInput("Age", h4("Age at presentation"), 
                        choices = list("0-3 days" = "0-3_days", "11-30 days" = "11-30_days",
                                        "4-10 days" = "4-10_daysl", "No evidence" = "no_evidence"), 
                        selected = "no_evidence")),
       div(style="display: inline-block;vertical-align:top; width: 50px;",HTML("<br>")),
       
       div(style="display: inline-block;vertical-align:top; width: 150px;", 
-          selectInput("LVH-value", h4("LVH"), 
+          selectInput("LVH", h4("LVH"), 
                       choices = list("No" = "no", "Yes" = "yes",
                                      "No evidence" = "no_evidence"), 
                       selected = "no_evidence")),
       div(style="display: inline-block;vertical-align:top; width: 50px;",HTML("<br>")),
       
       div(style="display: inline-block;vertical-align:top; width: 150px;", 
-          selectInput("DuctFlow-value", h4("Duct flow"), 
+          selectInput("DuctFlow", h4("Duct flow"), 
                       choices = list("Left to right" = "Lt_to_Rt", "None" = "None",
                                      "Right to Left" = "Rt_to_Lt", "No evidence" = "no_evidence"), 
                       selected = "no_evidence")),
       
       div(style="display: inline-block;vertical-align:top; width: 150px;", 
-          selectInput("CardiacMixing-value", h4("Cardiac mixing"), 
+          selectInput("CardiacMixing", h4("Cardiac mixing"), 
                       choices = list("Complete" = "Complete", "Mild" = "Mild",
                                      "None" = "None", "Transp." = "Transp.",
                                      "No evidence" = "no_evidence"), 
@@ -134,20 +134,20 @@ ui <- fluidPage(
       div(style="display: inline-block;vertical-align:top; width: 50px;",HTML("<br>")),
       
       div(style="display: inline-block;vertical-align:top; width: 150px;", 
-          selectInput("LungParench-value", h4("Lung parenchema"), 
+          selectInput("LungParench", h4("Lung parenchema"), 
                       choices = list("Abnormal" = "Abnormal", "Congested" = "Congested",
                                      "Normal" = "Normal", "No evidence" = "no_evidence"), 
                       selected = "no_evidence")),
       div(style="display: inline-block;vertical-align:top; width: 50px;",HTML("<br>")),
       
       div(style="display: inline-block;vertical-align:top; width: 150px;", 
-          selectInput("LungFlow-value", h4("Lung flow"), 
+          selectInput("LungFlow", h4("Lung flow"), 
                       choices = list("High" = "High", "Low" = "Low",
                                      "Normal" = "Normal", "No evidence" = "no_evidence"), 
                       selected = "no_evidence")),
       
       div(style="display: inline-block;vertical-align:top; width: 150px;",
-          selectInput("Sick-value", h4("Sick"), 
+          selectInput("Sick", h4("Sick"), 
                       choices = list("No" = "no", "Yes" = "yes",
                                      "No evidence" = "no_evidence"), 
                       selected = "no_evidence")),
@@ -175,7 +175,79 @@ server <- function(input, output) {
   
   output$probabilities <- renderText({ 
     # creating structure node=evidence
-    ev = list(LVHreport = "yes")
+    variables = c(input$BirthAsphyxia, input$HypDistrib, input$HypoxiaInO2, input$CO2, input$ChestXray, input$Grunting, input$LVHreport, input$LowerBodyO2, input$RUQO2, input$CO2Report, input$XrayReport, input$GruntingReport, input$Age, input$LVH, input$DuctFlow, input$CardiacMixing, input$LungParench, input$LungFlow, input$Sick)
+    variables_quote = c(quote(BirthAsphyxia), quote(HypDistrib), quote(HypoxiaInO2), quote(CO2), quote(ChestXray), quote(Grunting), quote(LVHreport), quote(LowerBodyO2), quote(RUQO2), quote(CO2Report), quote(XrayReport), quote(GruntingReport), quote(Age), quote(LVH), quote(DuctFlow), quote(CardiacMixing), quote(LungParench), quote(LungFlow), quote(Sick))
+    variables_name = c("BirthAsphyxia", "HypDistrib", "HypoxiaInO2", "CO2", "ChestXray", "Grunting", "LVHreport", "LowerBodyO2", "RUQO2", "CO2Report", "XrayReport", "GruntingReport", "Age", "LVH", "DuctFlow", "CardiacMixing", "LungParench", "LungFlow", "Sick")
+    print(variables)
+    print(variables_quote)
+    ev = list()
+    pos <- 1
+    for (i in 1 : length(variables)){
+      if (variables[i] != "no_evidence"){
+        tmp_name = variables_name[i]
+        tmp_v = variables[i]
+        ev[[tmp_name]] = tmp_v
+        #if(tmp_name == "BirthAsphyxia"){
+        #  
+        #}
+#        if(tmp_name == "HypDistrib"){
+#          
+#        }
+#        if(tmp_name == "HypoxiaInO2"){
+#          
+#        }
+#        if(tmp_name == "CO2"){
+#          
+#        }
+#        if(tmp_name == "ChestXray"){
+#          
+#        }
+#        if(tmp_name == "Grunting"){
+#          
+#        }
+#        if(tmp_name == "LVHreport"){
+#          
+#        }
+#        if(tmp_name == "LowerBodyO2"){
+#          
+ #       }
+#        if(tmp_name == "RUQO2"){
+#          
+#        }
+#        if(tmp_name == "CO2Report"){
+#          
+#        }
+#        if(tmp_name == "XrayReport"){
+ #         
+#        }
+#        if(tmp_name == "GruntingReport"){
+#          
+#        }
+#        if(tmp_name == "Age"){
+#          
+#        }
+#        if(tmp_name == "LVH"){
+#          
+#        }
+#        if(tmp_name == "DuctFlow"){
+#          
+#        }
+#        if(tmp_name == "CardiacMixing"){
+#          
+#        }
+#        if(tmp_name == "LungParench"){
+#          
+#        }
+#        if(tmp_name == "LungFlow"){
+#          
+#        }
+#        if(tmp_name == "Sick"){
+#          
+#        }
+        pos <- pos + 1
+      }
+    }
+    print(ev)
     # variable to store the most likelly disease
     new_cpt = list()
     #for (i in levels(dataset$Disease)){
