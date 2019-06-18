@@ -1,7 +1,17 @@
 # Here the code is run once at the launch of the app, so put HERE all 
 # the instruction to import libries, datas, whatever must be run 
 # once in order to not affect performances
+library(rstudioapi)
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+setwd("..")
+print(getwd())
 library(shiny)
+library(bnlearn)
+
+paper_model = model2network("[BirthAsphyxia][Disease|BirthAsphyxia][LVHreport|LVH][LVH|Disease][LowerBodyO2|HypDistrib:HypoxiaInO2][HypDistrib|DuctFlow:CardiacMixing][DuctFlow|Disease][RUQO2|HypoxiaInO2][HypoxiaInO2|CardiacMixing:LungParench][CardiacMixing|Disease][CO2Report|CO2][CO2|LungParench][LungParench|Disease][XrayReport|ChestXray][ChestXray|LungFlow:LungParench][LungFlow|Disease][GruntingReport|Grunting][Grunting|Sick:LungParench][Sick|Disease][Age|Sick:Disease]")
+MyData <- read.csv(file="BlueBaby.csv", header=TRUE, sep=",")
+dataset <- MyData[sample(nrow(MyData)), ]
+paper_full_trained = bn.fit(paper_model, dataset, method = "mle")
 
 # Define UI for app
 ui <- fluidPage(
@@ -140,17 +150,16 @@ ui <- fluidPage(
           selectInput("Sick-value", h4("Sick"), 
                       choices = list("No" = "no", "Yes" = "yes",
                                      "No evidence" = "no_evidence"), 
-                      selected = "no_evidence"))
+                      selected = "no_evidence")),
+      div(style="display: inline-block;vertical-align:top; width: 275px;",HTML("<br>")),
+            
+      div(style="display: inline-block;vertical-align:bottom; width: 100px;", submitButton("Hello there", icon("refresh")))
     ),
       
     mainPanel(  # main panel content
-      h1("First level title"), # , align = "center" to center the text
-      h2("Second level title"),
-      h3("Third level title"),
-      h4("Fourth level title"),
-      h5("Fifth level title"),
-      h6("Sixth level title")
-      
+      textOutput("selected_var"),
+      img(src = "paper_structure.png", height = 900, width = 800)
+            
       # look lesson 2 for formatted text and how insert images
 
           
@@ -163,6 +172,10 @@ ui <- fluidPage(
 server <- function(input, output) {
   # output$<id_widget_name> <- <render_funciont>({<a complicated function>})
   # input$<id_widget_name> to access the value of the widget
+  
+  output$selected_var <- renderText({ 
+    getwd()
+  })
 }
 
 # Run the app
