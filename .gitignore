@@ -36,5 +36,18 @@ vignettes/*.pdf
 *.knit.md
 
 # plotted images
-images/pdf/*.pdf
-images/png/*.png
+*.png
+*.pdf
+!Report/images/*.pdf
+!Report/images/Outliers/*.pdf
+Demo/*.png
+
+# report
+*.log
+*.aux
+*.gz
+*.toc
+*.out
+*.bbl
+*.bib
+*.run.xml
