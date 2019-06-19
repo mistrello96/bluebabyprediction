@@ -15,9 +15,9 @@ paper_full_trained = bn.fit(paper_model, dataset, method = "mle")
 
 # Define UI for app
 ui <- shinyUI(
-  navbarPage("My Application",
+  navbarPage("Blue Baby Disease Prediction",
     tabPanel(
-      "first tab",
+      "Probabilities of disease given some evidences",
       sidebarLayout( # layout with a sidebar
         # position = right to put the sidebar on the right
         
@@ -158,67 +158,64 @@ ui <- shinyUI(
         ),
           
         mainPanel(  # main panel content
-          img(src = "paper_structure.png", height = 830, width = 800),
-          textOutput("probabilities")
-                
-          # look lesson 2 for formatted text and how insert images
-    
-              
-          
+          img(src = "paper_structure.png", height = 810, width = 780),
+          span(textOutput("probabilities"), style = "font-size:20px")
         )
       )
     ),
+    
     tabPanel(
-      "this is a try",
+      "Establish if two variables are dependent or independet given some other evidences",
       sidebarLayout(
         sidebarPanel(
           h2("Select the queries nodes and the known variables:"),
           
           div(style="display: inline-block;vertical-align:top; width: 200px;", 
               selectInput("source", h4("First node:"), 
-                          choices = list("Birth asphyxia" = "BirthAsphyxia", "Hypoxia distribution" = "HypDistrib", 
-                                         "Hypoxia in O2" = "HypoxiaInO2", "CO2" = "CO2", 
-                                         "Chest X-ray" = "ChestXray", "Grunting" = "Grunting", 
-                                         "LVH report" = "LVHreport", "Lower body O2" = "LowerBodyO2",
-                                         "Right up quad O2" = "RUQO2", "CO2 report" = "CO2Report", 
-                                         "X-ray report" = "XrayReport", "Grunting report" = "GruntingReport", 
-                                         "Age at presentation" = "Age", "LVH" = "LVH", "Duct flow" = "DuctFlow", 
-                                         "Cardiac mixing" = "CardiacMixing", "Lung parenchema" = "LungParench", 
-                                         "Lung flow" = "LungFlow", "Sick" = "Sick", "Disease" = "Disease"), 
+                          choices = list("Age at presentation" = "Age", "Birth asphyxia" = "BirthAsphyxia", 
+                                         "CO2" = "CO2", "CO2 report" = "CO2Report", 
+                                         "Cardiac mixing" = "CardiacMixing", "Chest X-ray" = "ChestXray", 
+                                         "Disease" = "Disease", "Duct flow" = "DuctFlow", 
+                                         "Grunting" = "Grunting", "Grunting report" = "GruntingReport", 
+                                         "Hypoxia distribution" = "HypDistrib", "Hypoxia in O2" = "HypoxiaInO2", 
+                                         "LVH" = "LVH", "LVH report" = "LVHreport", "Lower body O2" = "LowerBodyO2",
+                                         "Lung flow" = "LungFlow", "Lung parenchema" = "LungParench", 
+                                         "Right up quad O2" = "RUQO2", "Sick" = "Sick", "X-ray report" = "XrayReport"), 
                           selected = "BirthAsphyxia")),
           
           div(style="display: inline-block;vertical-align:top; width: 100px;",HTML("<br>")),
           
           div(style="display: inline-block;vertical-align:top; width: 200px;", 
               selectInput("destination", h4("Second node:"), 
-                          choices = list("Birth asphyxia" = "BirthAsphyxia", "Hypoxia distribution" = "HypDistrib", 
-                                         "Hypoxia in O2" = "HypoxiaInO2", "CO2" = "CO2", 
-                                         "Chest X-ray" = "ChestXray", "Grunting" = "Grunting", 
-                                         "LVH report" = "LVHreport", "Lower body O2" = "LowerBodyO2",
-                                         "Right up quad O2" = "RUQO2", "CO2 report" = "CO2Report", 
-                                         "X-ray report" = "XrayReport", "Grunting report" = "GruntingReport", 
-                                         "Age at presentation" = "Age", "LVH" = "LVH", "Duct flow" = "DuctFlow", 
-                                         "Cardiac mixing" = "CardiacMixing", "Lung parenchema" = "LungParench", 
-                                         "Lung flow" = "LungFlow", "Sick" = "Sick", "Disease" = "Disease"), 
+                          choices = list("Age at presentation" = "Age", "Birth asphyxia" = "BirthAsphyxia", 
+                                         "CO2" = "CO2", "CO2 report" = "CO2Report", 
+                                         "Cardiac mixing" = "CardiacMixing", "Chest X-ray" = "ChestXray", 
+                                         "Disease" = "Disease", "Duct flow" = "DuctFlow", 
+                                         "Grunting" = "Grunting", "Grunting report" = "GruntingReport", 
+                                         "Hypoxia distribution" = "HypDistrib", "Hypoxia in O2" = "HypoxiaInO2", 
+                                         "LVH" = "LVH", "LVH report" = "LVHreport", "Lower body O2" = "LowerBodyO2",
+                                         "Lung flow" = "LungFlow", "Lung parenchema" = "LungParench", 
+                                         "Right up quad O2" = "RUQO2", "Sick" = "Sick", "X-ray report" = "XrayReport"), 
                           selected = "HypDistrib")),
           
           checkboxGroupInput("checkVariables", 
                              h4("Checkbox group"), 
-                             choices = list("Birth asphyxia" = "BirthAsphyxia", "Hypoxia distribution" = "HypDistrib", 
-                                            "Hypoxia in O2" = "HypoxiaInO2", "CO2" = "CO2", 
-                                            "Chest X-ray" = "ChestXray", "Grunting" = "Grunting", 
-                                            "LVH report" = "LVHreport", "Lower body O2" = "LowerBodyO2",
-                                            "Right up quad O2" = "RUQO2", "CO2 report" = "CO2Report", 
-                                            "X-ray report" = "XrayReport", "Grunting report" = "GruntingReport", 
-                                            "Age at presentation" = "Age", "LVH" = "LVH", "Duct flow" = "DuctFlow", 
-                                            "Cardiac mixing" = "CardiacMixing", "Lung parenchema" = "LungParench", 
-                                            "Lung flow" = "LungFlow", "Sick" = "Sick"), 
+                             choices = list("Age at presentation" = "Age", "Birth asphyxia" = "BirthAsphyxia", 
+                                            "CO2" = "CO2", "CO2 report" = "CO2Report", 
+                                            "Cardiac mixing" = "CardiacMixing", "Chest X-ray" = "ChestXray", 
+                                            "Disease" = "Disease", "Duct flow" = "DuctFlow", 
+                                            "Grunting" = "Grunting", "Grunting report" = "GruntingReport", 
+                                            "Hypoxia distribution" = "HypDistrib", "Hypoxia in O2" = "HypoxiaInO2", 
+                                            "LVH" = "LVH", "LVH report" = "LVHreport", "Lower body O2" = "LowerBodyO2",
+                                            "Lung flow" = "LungFlow", "Lung parenchema" = "LungParench", 
+                                            "Right up quad O2" = "RUQO2", "Sick" = "Sick", "X-ray report" = "XrayReport"), 
                              selected = NULL
           ),
           submitButton("Hello there", icon("refresh"))
         ),
         mainPanel(
-          textOutput("dSeparation")
+          img(src = "paper_structure.png", height = 750, width = 700),
+          span(textOutput("dSeparation"), style = "font-size:30px")
         )
       )
     )  
@@ -290,13 +287,21 @@ server <- function(input, output) {
   })
   output$dSeparation <- renderText({
     given = input$checkVariables
+    # i'm not looking if a query variable is considered an evidence
     if(is.null(given)){
       sprintf("Please insert some know variables")
     }
     else{
       source = input$source
       destination = input$destination
-      dsep(paper_model, source, destination, given)
+      is.dSeparated = FALSE
+      is.dSeparated = dsep(paper_model, source, destination, given)
+      if(is.dSeparated){
+        sprintf("%s is INDEPENDENT from %s", source, destination)
+      }
+      else{
+        sprintf("%s is DEPENDENT from %s", source, destination)
+      }
     }
   })
 }
