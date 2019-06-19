@@ -184,7 +184,7 @@ ui <- shinyUI(
                                          "X-ray report" = "XrayReport", "Grunting report" = "GruntingReport", 
                                          "Age at presentation" = "Age", "LVH" = "LVH", "Duct flow" = "DuctFlow", 
                                          "Cardiac mixing" = "CardiacMixing", "Lung parenchema" = "LungParench", 
-                                         "Lung flow" = "LungFlow", "Sick" = "Sick"), 
+                                         "Lung flow" = "LungFlow", "Sick" = "Sick", "Disease" = "Disease"), 
                           selected = "BirthAsphyxia")),
           
           div(style="display: inline-block;vertical-align:top; width: 100px;",HTML("<br>")),
@@ -199,11 +199,11 @@ ui <- shinyUI(
                                          "X-ray report" = "XrayReport", "Grunting report" = "GruntingReport", 
                                          "Age at presentation" = "Age", "LVH" = "LVH", "Duct flow" = "DuctFlow", 
                                          "Cardiac mixing" = "CardiacMixing", "Lung parenchema" = "LungParench", 
-                                         "Lung flow" = "LungFlow", "Sick" = "Sick"), 
+                                         "Lung flow" = "LungFlow", "Sick" = "Sick", "Disease" = "Disease"), 
                           selected = "HypDistrib")),
           
           checkboxGroupInput("checkVariables", 
-                             h3("Checkbox group"), 
+                             h4("Checkbox group"), 
                              choices = list("Birth asphyxia" = "BirthAsphyxia", "Hypoxia distribution" = "HypDistrib", 
                                             "Hypoxia in O2" = "HypoxiaInO2", "CO2" = "CO2", 
                                             "Chest X-ray" = "ChestXray", "Grunting" = "Grunting", 
@@ -215,7 +215,7 @@ ui <- shinyUI(
                                             "Lung flow" = "LungFlow", "Sick" = "Sick"), 
                              selected = NULL
           ),
-          submitButton("Hello there", icon("refresh2"))
+          submitButton("Hello there", icon("refresh"))
         ),
         mainPanel(
           textOutput("dSeparation")
@@ -289,9 +289,15 @@ server <- function(input, output) {
     }
   })
   output$dSeparation <- renderText({
-    print(input$checkVariables)
-    vs <- paste(input$checkVariables, collapse = ",")
-    paste("You chose", vs)
+    given = input$checkVariables
+    if(is.null(given)){
+      sprintf("Please insert some know variables")
+    }
+    else{
+      source = input$source
+      destination = input$destination
+      dsep(paper_model, source, destination, given)
+    }
   })
 }
 
