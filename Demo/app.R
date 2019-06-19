@@ -27,7 +27,7 @@ ui <- shinyUI(
           div(style="display: inline-block;vertical-align:top; width: 150px;", 
               selectInput("Age", h4("Age at presentation"), 
                           choices = list("0-3 days" = "0-3_days", "11-30 days" = "11-30_days",
-                                         "4-10 days" = "4-10_daysl", "No evidence" = "no_evidence"), 
+                                         "4-10 days" = "4-10_days", "No evidence" = "no_evidence"), 
                           selected = "no_evidence")),
           div(style="display: inline-block;vertical-align:top; width: 50px;",HTML("<br>")),
           
@@ -149,7 +149,7 @@ ui <- shinyUI(
           
           div(style="display: inline-block;vertical-align:top; width: 150px;", 
               selectInput("XrayReport", h4("X-ray report"), 
-                          choices = list("Asy/Patch" = "Asy/Patch", "Grd Glass" = "Grd_Glass",
+                          choices = list("Asy/Patchy" = "Asy/Patchy", "Grd Glass" = "Grd_Glass",
                                          "Normal" = "Normal", "Oligaemic" = "Oligaemic",
                                          "Plethoric" = "Plethoric", "No evidence" = "no_evidence"), 
                           selected = "no_evidence")),
