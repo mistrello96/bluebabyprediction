@@ -14,157 +14,214 @@ dataset <- MyData[sample(nrow(MyData)), ]
 paper_full_trained = bn.fit(paper_model, dataset, method = "mle")
 
 # Define UI for app
-ui <- fluidPage(
-  titlePanel(h1("This is a title")),
-  
-  sidebarLayout( # layout with a sidebar
-    # position = right to put the sidebar on the right
-    
-    sidebarPanel( # side bar content
-      h2("Select the evidences you have:"),
-      
-      div(style="display: inline-block;vertical-align:top; width: 150px;", 
-          selectInput("BirthAsphyxia", h4("Birth asphyxia"), 
-                      choices = list("No" = "no", "Yes" = "yes", 
-                                     "No evidence" = "no_evidence"), 
-                      selected = "no_evidence")),
-      div(style="display: inline-block;vertical-align:top; width: 50px;",HTML("<br>")),
-      
-      div(style="display: inline-block;vertical-align:top; width: 150px;", 
-          selectInput("HypDistrib", h4("Hypoxia distribution"), 
-                      choices = list("Equal" = "Equal", "Unequal" = "Unequal", 
-                                     "No evidence" = "no_evidence"), 
-                      selected = "no_evidence")),
-      div(style="display: inline-block;vertical-align:top; width: 50px;",HTML("<br>")),
-      
-      div(style="display: inline-block;vertical-align:top; width: 150px;", 
-          selectInput("HypoxiaInO2", h4("Hypoxia in O2"), 
-                      choices = list("Mild" = "Mild", "Moderate" = "Moderate",
-                                     "Severe" = "Severe", "No evidence" = "no_evidence"), 
-                      selected = "no_evidence")),
-      
-      div(style="display: inline-block;vertical-align:top; width: 150px;", 
-          selectInput("CO2", h4("CO2"), 
-                      choices = list("High" = "High", "Low" = "Low",
-                                     "Normal" = "Normal", "No evidence" = "no_evidence"), 
-                      selected = "no_evidence")),
-      div(style="display: inline-block;vertical-align:top; width: 50px;",HTML("<br>")),
-      
-      div(style="display: inline-block;vertical-align:top; width: 150px;", 
-          selectInput("ChestXray", h4("Chest X-ray"), 
-                      choices = list("Asy/Patch" = "Asy/Patch", "Grd Glass" = "Grd_Glass",
-                                     "Normal" = "Normal", "Oligaemic" = "Oligaemic",
-                                     "Plethoric" = "Plethoric", "No evidence" = "no_evidence"), 
-                      selected = "no_evidence")),
-      div(style="display: inline-block;vertical-align:top; width: 50px;",HTML("<br>")),
-      
-      div(style="display: inline-block;vertical-align:top; width: 150px;", 
-          selectInput("Grunting", h4("Grunting"), 
-                      choices = list("No" = "no", "Yes" = "yes",
-                                     "No evidence" = "no_evidence"), 
-                      selected = "no_evidence")),
-      
-      div(style="display: inline-block;vertical-align:top; width: 150px;", 
-          selectInput("LVHreport", h4("LVH report"), 
-                      choices = list("No" = "no", "Yes" = "yes",
-                                     "No evidence" = "no_evidence"), 
-                      selected = "no_evidence")),
-      div(style="display: inline-block;vertical-align:top; width: 50px;",HTML("<br>")),
-      
-      div(style="display: inline-block;vertical-align:top; width: 150px;", 
-          selectInput("LowerBodyO2", h4("Lower body O2"), 
-                      choices = list("<5" = "<5", "12+" = "12+", 
-                                     "5-12" = "5-12", "No evidence" = "no_evidence"), 
-                      selected = "no_evidence")),
-      div(style="display: inline-block;vertical-align:top; width: 50px;",HTML("<br>")),
-      
-      div(style="display: inline-block;vertical-align:top; width: 150px;", 
-          selectInput("RUQO2", h4("Right up quad O2"), 
-                      choices = list("<5" = "<5", "12+" = "12+", 
-                                     "5-12" = "5-12", "No evidence" = "no_evidence"), 
-                      selected = "no_evidence")),
-      
-      div(style="display: inline-block;vertical-align:top; width: 150px;", 
-          selectInput("CO2Report", h4("CO2 report"), 
-                      choices = list("<7.5" = "<7.5", ">=7.5" = ">=7.5",
-                                     "No evidence" = "no_evidence"), 
-                      selected = "no_evidence")),
-      div(style="display: inline-block;vertical-align:top; width: 50px;",HTML("<br>")),
-      
-      div(style="display: inline-block;vertical-align:top; width: 150px;", 
-          selectInput("XrayReport", h4("X-ray report"), 
-                      choices = list("Asy/Patch" = "Asy/Patch", "Grd Glass" = "Grd_Glass",
-                                     "Normal" = "Normal", "Oligaemic" = "Oligaemic",
-                                     "Plethoric" = "Plethoric", "No evidence" = "no_evidence"), 
-                      selected = "no_evidence")),
-      div(style="display: inline-block;vertical-align:top; width: 50px;",HTML("<br>")),
-      
-      div(style="display: inline-block;vertical-align:top; width: 150px;", 
-          selectInput("GruntingReport", h4("Grunting report"), 
-                      choices = list("No" = "no", "Yes" = "yes",
-                                     "No evidence" = "no_evidence"), 
-                      selected = "no_evidence")),
-     
-       div(style="display: inline-block;vertical-align:top; width: 150px;", 
-           selectInput("Age", h4("Age at presentation"), 
-                       choices = list("0-3 days" = "0-3_days", "11-30 days" = "11-30_days",
-                                       "4-10 days" = "4-10_daysl", "No evidence" = "no_evidence"), 
-                       selected = "no_evidence")),
-      div(style="display: inline-block;vertical-align:top; width: 50px;",HTML("<br>")),
-      
-      div(style="display: inline-block;vertical-align:top; width: 150px;", 
-          selectInput("LVH", h4("LVH"), 
-                      choices = list("No" = "no", "Yes" = "yes",
-                                     "No evidence" = "no_evidence"), 
-                      selected = "no_evidence")),
-      div(style="display: inline-block;vertical-align:top; width: 50px;",HTML("<br>")),
-      
-      div(style="display: inline-block;vertical-align:top; width: 150px;", 
-          selectInput("DuctFlow", h4("Duct flow"), 
-                      choices = list("Left to right" = "Lt_to_Rt", "None" = "None",
-                                     "Right to Left" = "Rt_to_Lt", "No evidence" = "no_evidence"), 
-                      selected = "no_evidence")),
-      
-      div(style="display: inline-block;vertical-align:top; width: 150px;", 
-          selectInput("CardiacMixing", h4("Cardiac mixing"), 
-                      choices = list("Complete" = "Complete", "Mild" = "Mild",
-                                     "None" = "None", "Transp." = "Transp.",
-                                     "No evidence" = "no_evidence"), 
-                      selected = "no_evidence")),
-      div(style="display: inline-block;vertical-align:top; width: 50px;",HTML("<br>")),
-      
-      div(style="display: inline-block;vertical-align:top; width: 150px;", 
-          selectInput("LungParench", h4("Lung parenchema"), 
-                      choices = list("Abnormal" = "Abnormal", "Congested" = "Congested",
-                                     "Normal" = "Normal", "No evidence" = "no_evidence"), 
-                      selected = "no_evidence")),
-      div(style="display: inline-block;vertical-align:top; width: 50px;",HTML("<br>")),
-      
-      div(style="display: inline-block;vertical-align:top; width: 150px;", 
-          selectInput("LungFlow", h4("Lung flow"), 
-                      choices = list("High" = "High", "Low" = "Low",
-                                     "Normal" = "Normal", "No evidence" = "no_evidence"), 
-                      selected = "no_evidence")),
-      
-      div(style="display: inline-block;vertical-align:top; width: 150px;",
-          selectInput("Sick", h4("Sick"), 
-                      choices = list("No" = "no", "Yes" = "yes",
-                                     "No evidence" = "no_evidence"), 
-                      selected = "no_evidence")),
-      div(style="display: inline-block;vertical-align:top; width: 275px;",HTML("<br>")),
-            
-      div(style="display: inline-block;vertical-align:bottom; width: 100px;", submitButton("Hello there", icon("refresh")))
-    ),
-      
-    mainPanel(  # main panel content
-      img(src = "paper_structure.png", height = 830, width = 800),
-      textOutput("probabilities")
-            
-      # look lesson 2 for formatted text and how insert images
-
+ui <- shinyUI(
+  navbarPage("My Application",
+    tabPanel(
+      "first tab",
+      sidebarLayout( # layout with a sidebar
+        # position = right to put the sidebar on the right
+        
+        sidebarPanel( # side bar content
+          h2("Select the evidences you have:"),
           
-      
-    )
+          div(style="display: inline-block;vertical-align:top; width: 150px;", 
+              selectInput("BirthAsphyxia", h4("Birth asphyxia"), 
+                          choices = list("No" = "no", "Yes" = "yes", 
+                                         "No evidence" = "no_evidence"), 
+                          selected = "no_evidence")),
+          div(style="display: inline-block;vertical-align:top; width: 50px;",HTML("<br>")),
+          
+          div(style="display: inline-block;vertical-align:top; width: 150px;", 
+              selectInput("HypDistrib", h4("Hypoxia distribution"), 
+                          choices = list("Equal" = "Equal", "Unequal" = "Unequal", 
+                                         "No evidence" = "no_evidence"), 
+                          selected = "no_evidence")),
+          div(style="display: inline-block;vertical-align:top; width: 50px;",HTML("<br>")),
+          
+          div(style="display: inline-block;vertical-align:top; width: 150px;", 
+              selectInput("HypoxiaInO2", h4("Hypoxia in O2"), 
+                          choices = list("Mild" = "Mild", "Moderate" = "Moderate",
+                                         "Severe" = "Severe", "No evidence" = "no_evidence"), 
+                          selected = "no_evidence")),
+          
+          div(style="display: inline-block;vertical-align:top; width: 150px;", 
+              selectInput("CO2", h4("CO2"), 
+                          choices = list("High" = "High", "Low" = "Low",
+                                         "Normal" = "Normal", "No evidence" = "no_evidence"), 
+                          selected = "no_evidence")),
+          div(style="display: inline-block;vertical-align:top; width: 50px;",HTML("<br>")),
+          
+          div(style="display: inline-block;vertical-align:top; width: 150px;", 
+              selectInput("ChestXray", h4("Chest X-ray"), 
+                          choices = list("Asy/Patch" = "Asy/Patch", "Grd Glass" = "Grd_Glass",
+                                         "Normal" = "Normal", "Oligaemic" = "Oligaemic",
+                                         "Plethoric" = "Plethoric", "No evidence" = "no_evidence"), 
+                          selected = "no_evidence")),
+          div(style="display: inline-block;vertical-align:top; width: 50px;",HTML("<br>")),
+          
+          div(style="display: inline-block;vertical-align:top; width: 150px;", 
+              selectInput("Grunting", h4("Grunting"), 
+                          choices = list("No" = "no", "Yes" = "yes",
+                                         "No evidence" = "no_evidence"), 
+                          selected = "no_evidence")),
+          
+          div(style="display: inline-block;vertical-align:top; width: 150px;", 
+              selectInput("LVHreport", h4("LVH report"), 
+                          choices = list("No" = "no", "Yes" = "yes",
+                                         "No evidence" = "no_evidence"), 
+                          selected = "no_evidence")),
+          div(style="display: inline-block;vertical-align:top; width: 50px;",HTML("<br>")),
+          
+          div(style="display: inline-block;vertical-align:top; width: 150px;", 
+              selectInput("LowerBodyO2", h4("Lower body O2"), 
+                          choices = list("<5" = "<5", "12+" = "12+", 
+                                         "5-12" = "5-12", "No evidence" = "no_evidence"), 
+                          selected = "no_evidence")),
+          div(style="display: inline-block;vertical-align:top; width: 50px;",HTML("<br>")),
+          
+          div(style="display: inline-block;vertical-align:top; width: 150px;", 
+              selectInput("RUQO2", h4("Right up quad O2"), 
+                          choices = list("<5" = "<5", "12+" = "12+", 
+                                         "5-12" = "5-12", "No evidence" = "no_evidence"), 
+                          selected = "no_evidence")),
+          
+          div(style="display: inline-block;vertical-align:top; width: 150px;", 
+              selectInput("CO2Report", h4("CO2 report"), 
+                          choices = list("<7.5" = "<7.5", ">=7.5" = ">=7.5",
+                                         "No evidence" = "no_evidence"), 
+                          selected = "no_evidence")),
+          div(style="display: inline-block;vertical-align:top; width: 50px;",HTML("<br>")),
+          
+          div(style="display: inline-block;vertical-align:top; width: 150px;", 
+              selectInput("XrayReport", h4("X-ray report"), 
+                          choices = list("Asy/Patch" = "Asy/Patch", "Grd Glass" = "Grd_Glass",
+                                         "Normal" = "Normal", "Oligaemic" = "Oligaemic",
+                                         "Plethoric" = "Plethoric", "No evidence" = "no_evidence"), 
+                          selected = "no_evidence")),
+          div(style="display: inline-block;vertical-align:top; width: 50px;",HTML("<br>")),
+          
+          div(style="display: inline-block;vertical-align:top; width: 150px;", 
+              selectInput("GruntingReport", h4("Grunting report"), 
+                          choices = list("No" = "no", "Yes" = "yes",
+                                         "No evidence" = "no_evidence"), 
+                          selected = "no_evidence")),
+         
+           div(style="display: inline-block;vertical-align:top; width: 150px;", 
+               selectInput("Age", h4("Age at presentation"), 
+                           choices = list("0-3 days" = "0-3_days", "11-30 days" = "11-30_days",
+                                           "4-10 days" = "4-10_daysl", "No evidence" = "no_evidence"), 
+                           selected = "no_evidence")),
+          div(style="display: inline-block;vertical-align:top; width: 50px;",HTML("<br>")),
+          
+          div(style="display: inline-block;vertical-align:top; width: 150px;", 
+              selectInput("LVH", h4("LVH"), 
+                          choices = list("No" = "no", "Yes" = "yes",
+                                         "No evidence" = "no_evidence"), 
+                          selected = "no_evidence")),
+          div(style="display: inline-block;vertical-align:top; width: 50px;",HTML("<br>")),
+          
+          div(style="display: inline-block;vertical-align:top; width: 150px;", 
+              selectInput("DuctFlow", h4("Duct flow"), 
+                          choices = list("Left to right" = "Lt_to_Rt", "None" = "None",
+                                         "Right to Left" = "Rt_to_Lt", "No evidence" = "no_evidence"), 
+                          selected = "no_evidence")),
+          
+          div(style="display: inline-block;vertical-align:top; width: 150px;", 
+              selectInput("CardiacMixing", h4("Cardiac mixing"), 
+                          choices = list("Complete" = "Complete", "Mild" = "Mild",
+                                         "None" = "None", "Transp." = "Transp.",
+                                         "No evidence" = "no_evidence"), 
+                          selected = "no_evidence")),
+          div(style="display: inline-block;vertical-align:top; width: 50px;",HTML("<br>")),
+          
+          div(style="display: inline-block;vertical-align:top; width: 150px;", 
+              selectInput("LungParench", h4("Lung parenchema"), 
+                          choices = list("Abnormal" = "Abnormal", "Congested" = "Congested",
+                                         "Normal" = "Normal", "No evidence" = "no_evidence"), 
+                          selected = "no_evidence")),
+          div(style="display: inline-block;vertical-align:top; width: 50px;",HTML("<br>")),
+          
+          div(style="display: inline-block;vertical-align:top; width: 150px;", 
+              selectInput("LungFlow", h4("Lung flow"), 
+                          choices = list("High" = "High", "Low" = "Low",
+                                         "Normal" = "Normal", "No evidence" = "no_evidence"), 
+                          selected = "no_evidence")),
+          
+          div(style="display: inline-block;vertical-align:top; width: 150px;",
+              selectInput("Sick", h4("Sick"), 
+                          choices = list("No" = "no", "Yes" = "yes",
+                                         "No evidence" = "no_evidence"), 
+                          selected = "no_evidence")),
+          div(style="display: inline-block;vertical-align:top; width: 275px;",HTML("<br>")),
+                
+          div(style="display: inline-block;vertical-align:bottom; width: 100px;", submitButton("Hello there", icon("refresh")))
+        ),
+          
+        mainPanel(  # main panel content
+          img(src = "paper_structure.png", height = 830, width = 800),
+          textOutput("probabilities")
+                
+          # look lesson 2 for formatted text and how insert images
+    
+              
+          
+        )
+      )
+    ),
+    tabPanel(
+      "this is a try",
+      sidebarLayout(
+        sidebarPanel(
+          h2("Select the queries nodes and the known variables:"),
+          
+          div(style="display: inline-block;vertical-align:top; width: 200px;", 
+              selectInput("source", h4("First node:"), 
+                          choices = list("Birth asphyxia" = "BirthAsphyxia", "Hypoxia distribution" = "HypDistrib", 
+                                         "Hypoxia in O2" = "HypoxiaInO2", "CO2" = "CO2", 
+                                         "Chest X-ray" = "ChestXray", "Grunting" = "Grunting", 
+                                         "LVH report" = "LVHreport", "Lower body O2" = "LowerBodyO2",
+                                         "Right up quad O2" = "RUQO2", "CO2 report" = "CO2Report", 
+                                         "X-ray report" = "XrayReport", "Grunting report" = "GruntingReport", 
+                                         "Age at presentation" = "Age", "LVH" = "LVH", "Duct flow" = "DuctFlow", 
+                                         "Cardiac mixing" = "CardiacMixing", "Lung parenchema" = "LungParench", 
+                                         "Lung flow" = "LungFlow", "Sick" = "Sick"), 
+                          selected = "BirthAsphyxia")),
+          
+          div(style="display: inline-block;vertical-align:top; width: 100px;",HTML("<br>")),
+          
+          div(style="display: inline-block;vertical-align:top; width: 200px;", 
+              selectInput("destination", h4("Second node:"), 
+                          choices = list("Birth asphyxia" = "BirthAsphyxia", "Hypoxia distribution" = "HypDistrib", 
+                                         "Hypoxia in O2" = "HypoxiaInO2", "CO2" = "CO2", 
+                                         "Chest X-ray" = "ChestXray", "Grunting" = "Grunting", 
+                                         "LVH report" = "LVHreport", "Lower body O2" = "LowerBodyO2",
+                                         "Right up quad O2" = "RUQO2", "CO2 report" = "CO2Report", 
+                                         "X-ray report" = "XrayReport", "Grunting report" = "GruntingReport", 
+                                         "Age at presentation" = "Age", "LVH" = "LVH", "Duct flow" = "DuctFlow", 
+                                         "Cardiac mixing" = "CardiacMixing", "Lung parenchema" = "LungParench", 
+                                         "Lung flow" = "LungFlow", "Sick" = "Sick"), 
+                          selected = "HypDistrib")),
+          
+          checkboxGroupInput("checkVariables", 
+                             h3("Checkbox group"), 
+                             choices = list("Birth asphyxia" = "BirthAsphyxia", "Hypoxia distribution" = "HypDistrib", 
+                                            "Hypoxia in O2" = "HypoxiaInO2", "CO2" = "CO2", 
+                                            "Chest X-ray" = "ChestXray", "Grunting" = "Grunting", 
+                                            "LVH report" = "LVHreport", "Lower body O2" = "LowerBodyO2",
+                                            "Right up quad O2" = "RUQO2", "CO2 report" = "CO2Report", 
+                                            "X-ray report" = "XrayReport", "Grunting report" = "GruntingReport", 
+                                            "Age at presentation" = "Age", "LVH" = "LVH", "Duct flow" = "DuctFlow", 
+                                            "Cardiac mixing" = "CardiacMixing", "Lung parenchema" = "LungParench", 
+                                            "Lung flow" = "LungFlow", "Sick" = "Sick"), 
+                             selected = NULL
+          ),
+          submitButton("Hello there", icon("refresh2"))
+        ),
+        mainPanel(
+          textOutput("dSeparation")
+        )
+      )
+    )  
   )
 )
 
@@ -230,6 +287,11 @@ server <- function(input, output) {
     else{
       sprintf("Insert some evidences, please")
     }
+  })
+  output$dSeparation <- renderText({
+    print(input$checkVariables)
+    vs <- paste(input$checkVariables, collapse = ",")
+    paste("You chose", vs)
   })
 }
 
