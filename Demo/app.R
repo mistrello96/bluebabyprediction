@@ -176,10 +176,7 @@ server <- function(input, output) {
   output$probabilities <- renderText({ 
     # creating structure node=evidence
     variables = c(input$BirthAsphyxia, input$HypDistrib, input$HypoxiaInO2, input$CO2, input$ChestXray, input$Grunting, input$LVHreport, input$LowerBodyO2, input$RUQO2, input$CO2Report, input$XrayReport, input$GruntingReport, input$Age, input$LVH, input$DuctFlow, input$CardiacMixing, input$LungParench, input$LungFlow, input$Sick)
-    variables_quote = c(quote(BirthAsphyxia), quote(HypDistrib), quote(HypoxiaInO2), quote(CO2), quote(ChestXray), quote(Grunting), quote(LVHreport), quote(LowerBodyO2), quote(RUQO2), quote(CO2Report), quote(XrayReport), quote(GruntingReport), quote(Age), quote(LVH), quote(DuctFlow), quote(CardiacMixing), quote(LungParench), quote(LungFlow), quote(Sick))
     variables_name = c("BirthAsphyxia", "HypDistrib", "HypoxiaInO2", "CO2", "ChestXray", "Grunting", "LVHreport", "LowerBodyO2", "RUQO2", "CO2Report", "XrayReport", "GruntingReport", "Age", "LVH", "DuctFlow", "CardiacMixing", "LungParench", "LungFlow", "Sick")
-    print(variables)
-    print(variables_quote)
     ev = list()
     pos <- 1
     for (i in 1 : length(variables)){
@@ -187,101 +184,52 @@ server <- function(input, output) {
         tmp_name = variables_name[i]
         tmp_v = variables[i]
         ev[[tmp_name]] = tmp_v
-        #if(tmp_name == "BirthAsphyxia"){
-        #  
-        #}
-#        if(tmp_name == "HypDistrib"){
-#          
-#        }
-#        if(tmp_name == "HypoxiaInO2"){
-#          
-#        }
-#        if(tmp_name == "CO2"){
-#          
-#        }
-#        if(tmp_name == "ChestXray"){
-#          
-#        }
-#        if(tmp_name == "Grunting"){
-#          
-#        }
-#        if(tmp_name == "LVHreport"){
-#          
-#        }
-#        if(tmp_name == "LowerBodyO2"){
-#          
- #       }
-#        if(tmp_name == "RUQO2"){
-#          
-#        }
-#        if(tmp_name == "CO2Report"){
-#          
-#        }
-#        if(tmp_name == "XrayReport"){
- #         
-#        }
-#        if(tmp_name == "GruntingReport"){
-#          
-#        }
-#        if(tmp_name == "Age"){
-#          
-#        }
-#        if(tmp_name == "LVH"){
-#          
-#        }
-#        if(tmp_name == "DuctFlow"){
-#          
-#        }
-#        if(tmp_name == "CardiacMixing"){
-#          
-#        }
-#        if(tmp_name == "LungParench"){
-#          
-#        }
-#        if(tmp_name == "LungFlow"){
-#          
-#        }
-#        if(tmp_name == "Sick"){
-#          
-#        }
         pos <- pos + 1
       }
     }
-    print(ev)
-    # variable to store the most likelly disease
-    new_cpt = list()
-    #for (i in levels(dataset$Disease)){
-    #  res = cpquery(paper_full_trained, event=Disease==i, method="lw", evidence = ev)
-    #  new_cpt[[pos]] = paste0(i, ": ", res)
-    #  pos <- pos + 1
-    #}
     
-    s <- 0
-    res = cpquery(paper_full_trained, event=Disease=="Fallot", method="lw", evidence = ev)
-    new_cpt[[1]] = paste0("Fallot", ": ", res)
-    s <- s + res
-    res = cpquery(paper_full_trained, event=Disease=="Lung", method="lw", evidence = ev)
-    new_cpt[[2]] = paste0("Lung", ": ", res)
-    s <- s + res
-    res = cpquery(paper_full_trained, event=Disease=="PAIVS", method="lw", evidence = ev)
-    new_cpt[[3]] = paste0("PAIVS", ": ", res)
-    s <- s + res
-    res = cpquery(paper_full_trained, event=Disease=="PFC", method="lw", evidence = ev)
-    new_cpt[[4]] = paste0("PFC", ": ", res)
-    s <- s + res
-    res = cpquery(paper_full_trained, event=Disease=="TAPVD", method="lw", evidence = ev)
-    new_cpt[[5]] = paste0("TAPVD", ": ", res)
-    s <- s + res
-    res = cpquery(paper_full_trained, event=Disease=="TGA", method="lw", evidence = ev)
-    new_cpt[[6]] = paste0("TGA", ": ", res)
-    s <- s + res
-    
-    #for (i in 1 : 6){
-    #  new_cpt[i] = new_cpt[i] / s
-    #}
-    
-    print(new_cpt)
-    sprintf("%s, %s, %s, %s, %s, %s", new_cpt[1], new_cpt[2], new_cpt[3], new_cpt[4], new_cpt[5], new_cpt[6])
+    if(length(ev) != 0){
+      # variable to store the most likelly disease
+      probs = list()
+      #for (i in levels(dataset$Disease)){
+      #  res = cpquery(paper_full_trained, event=Disease==i, method="lw", evidence = ev)
+      #  probs[[pos]] = paste0(i, ": ", res)
+      #  pos <- pos + 1
+      #}
+      
+      disease_values = c("Fallot", "Lung", "PAIVS", "PFC", "TAPVD", "TGA")
+      tmp = list()
+      s <- 0
+      res = cpquery(paper_full_trained, event=Disease=="Fallot", method="lw", evidence = ev)
+      tmp[[1]] = res
+      s <- s + res
+      res = cpquery(paper_full_trained, event=Disease=="Lung", method="lw", evidence = ev)
+      tmp[[2]] = res
+      s <- s + res
+      res = cpquery(paper_full_trained, event=Disease=="PAIVS", method="lw", evidence = ev)
+      tmp[[3]] = res
+      s <- s + res
+      res = cpquery(paper_full_trained, event=Disease=="PFC", method="lw", evidence = ev)
+      tmp[[4]] = res
+      s <- s + res
+      res = cpquery(paper_full_trained, event=Disease=="TAPVD", method="lw", evidence = ev)
+      tmp[[5]] = res
+      s <- s + res
+      res = cpquery(paper_full_trained, event=Disease=="TGA", method="lw", evidence = ev)
+      tmp[[6]] = res
+      s <- s + res
+      
+      for (i in 1 : 6){
+        tmp[[i]] = round((tmp[[i]] / s), digits = 3) * 100
+        probs[[i]] = paste0(disease_values[i], " : ", tmp[i], "%")
+      }
+      
+      
+      sprintf("%s, %s, %s, %s, %s, %s", probs[1], probs[2], probs[3], probs[4], probs[5], probs[6])
+    }
+    else{
+      sprintf("Insert some evidences, please")
+    }
   })
 }
 
