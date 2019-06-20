@@ -159,8 +159,10 @@ ui <- shinyUI(
         ),
           
         mainPanel(  # main panel content
-          img(src = "paper_structure.png", height = 810, width = 780),
-          span(textOutput("probabilities"), style = "font-size:20px")
+          img(src = "paper_structure.png", height = 601, width = 833),
+          br(),
+          br(),
+          span(textOutput("probabilities"), style = "font-size:30px")
         )
       )
     ),
@@ -215,7 +217,9 @@ ui <- shinyUI(
           submitButton("Update", icon("refresh"))
         ),
         mainPanel(
-          img(src = "paper_structure.png", height = 750, width = 700),
+          img(src = "paper_structure.png", height = 601, width = 833),
+          br(),
+          br(),
           span(textOutput("dSeparation"), style = "font-size:30px")
         )
       )
