@@ -1,4 +1,5 @@
 library(bnlearn)
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 # funzione che valuta le performance medie al termine della 10-fold cross validation
 evaluatePerformance = function(accuracy, precision, recall, f1measure){

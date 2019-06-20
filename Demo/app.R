@@ -4,7 +4,6 @@
 library(rstudioapi)
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 setwd("..")
-print(getwd())
 library(shiny)
 library(bnlearn)
 
