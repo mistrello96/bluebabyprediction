@@ -16,9 +16,8 @@ evaluatePerformance = function(accuracy, precision, recall, f1measure){
 ### DATASET IMPORT
 # load file
 MyData <- read.csv(file = "BlueBaby.csv", header = TRUE, sep = ",")
+dataset <- MyData[sample(nrow(MyData)), ]
 
-dataset <- MyData[sample(nrow(MyData)), ] 
-ind <- cut(1 : nrow(dataset), breaks = 10, labels = F)
 # creating the paper's model
 paper_model = model2network("[BirthAsphyxia][Disease|BirthAsphyxia][LVHreport|LVH][LVH|Disease][LowerBodyO2|HypDistrib:HypoxiaInO2][HypDistrib|DuctFlow:CardiacMixing][DuctFlow|Disease][RUQO2|HypoxiaInO2][HypoxiaInO2|CardiacMixing:LungParench][CardiacMixing|Disease][CO2Report|CO2][CO2|LungParench][LungParench|Disease][XrayReport|ChestXray][ChestXray|LungFlow:LungParench][LungFlow|Disease][GruntingReport|Grunting][Grunting|Sick:LungParench][Sick|Disease][Age|Sick:Disease]")
 # print model info
@@ -58,8 +57,10 @@ reversed_recall_repeated = c()
 reversed_f1measure_repeated = c()
 
 for (j in 1 : 10){  
+  # random index
+  dataset <- MyData[sample(nrow(MyData)), ]
+  ind <- cut(1 : nrow(dataset), breaks = 10, labels = F)
   # creating 10 fold cross validation array
-  
   paper_accuracy = c()
   paper_precision = c()
   paper_recall = c()
@@ -283,8 +284,10 @@ induced_recall_repeated = c()
 induced_f1measure_repeated = c()
 
 for (j in 1 : 10){  
+  # random index
+  dataset <- MyData[sample(nrow(MyData)), ]
+  ind <- cut(1 : nrow(dataset), breaks = 10, labels = F)
   # creating 10 fold cross validation array
-  
   paper_accuracy = c()
   paper_precision = c()
   paper_recall = c()
@@ -365,7 +368,7 @@ for (j in 1 : 10){
     f1measure = 2 * (precision * recall / (precision + recall))
     induced_f1measure = append(f1measure, induced_f1measure)
     
-  }
+  }E
   paper_accuracy_repeated = append(mean(paper_accuracy), paper_accuracy_repeated)
   paper_precision_repeated = append(mean(paper_precision), paper_precision_repeated)
   paper_recall_repeated = append(mean(paper_recall), paper_recall_repeated)
@@ -450,3 +453,4 @@ destination = "CO2"
 given = c("LowerBodyO2", "RUQO2", "GruntingReport", "Age", "CO2Report", "XrayReport", "LVHreport", "BirthAsphyxia")
 dsep(paper_model, source, destination, given)
 # in this way, no d-separation is possible
+
